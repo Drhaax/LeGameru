@@ -9,7 +9,7 @@ using ByteSerializer;
 using FixMath.NET;
 
 public interface ICoreMessager{
-    void Login();
+    void Login(string name);
 }
 
 public class CoreMessager : ICoreMessager
@@ -33,11 +33,11 @@ public class CoreMessager : ICoreMessager
         UdpService.AddMessageCallback(HandleMessageReceived);
     }
 
-    public void Login() {
+    public void Login(string name) {
 
         var msg = new Message() {
             type = MessageType.LogIn,
-            name = Guid.NewGuid().ToString(),
+            name = name,
             message = "leTeesb",
             playerState = new PlayerState() {
                 Position = new CustomVector(Fix64.One,Fix64.One,Fix64.One)

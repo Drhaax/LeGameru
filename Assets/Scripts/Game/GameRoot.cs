@@ -27,10 +27,10 @@ public class GameRoot : MonoBehaviour, IEventProcessor
         gameLogic.StartLogic();
     }
 
-    // Update is called once per frame
     void Update(){
-        time += Time.deltaTime; 
-        if (time >= 1 / CoreMessager.TickDuration) {
+        time += Time.deltaTime;
+        if (time >= (1f / CoreMessager.TickDuration)) {
+            time = 0;
             if (Tick != null) {
                 Tick.Invoke();
             }

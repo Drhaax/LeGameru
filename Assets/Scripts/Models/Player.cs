@@ -29,12 +29,19 @@ public class Players
 public class Player
 {
     public string Id;
+    public Stats PlayerStats;
+    public Inventory Inventory;
+    public Equipments Equipments;
+    
     public CustomVector CurrentPosition;
     public CustomVector TargetPosition;
     public bool isLocal;
     public Action<object, string> PlayerModelChanged = (o, s) => { };
     public Player(string Id) {
         this.Id = Id;
+        PlayerStats = new Stats();
+        Inventory = new Inventory();
+        Equipments = new Equipments();
         CurrentPosition = new CustomVector(Fix64.Zero, (Fix64)3, Fix64.Zero);
         TargetPosition = new CustomVector(Fix64.Zero, Fix64.Zero, Fix64.Zero);
     }

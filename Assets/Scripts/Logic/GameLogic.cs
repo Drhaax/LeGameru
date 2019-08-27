@@ -7,11 +7,8 @@ using FixMath.NET;
 
 public class GameLogic
 {
-
     CoreMessager coreMessager;
     IEventProcessor eventProsessor;
-  //  Players Players;
-    Player localPlayer;
     Aggregates aggregates;
     public GameLogic(IEventProcessor eventProsessor, ref Action OnTick, CoreMessager coreMessager,Aggregates aggregates) {
         this.eventProsessor = eventProsessor;
@@ -66,10 +63,7 @@ public class GameLogic
     }
 
     public void Movement(Message msg, UdpState s) {
-        //eventProsessor.AddEventToQueue(() => {
-        //    var pos = msg.playerState.Position.ToVector3();
-        //    aggregates.PlayerAggregate.LocalPlayer.SetPosition(pos);
-        //});
+     
     }
 
 }

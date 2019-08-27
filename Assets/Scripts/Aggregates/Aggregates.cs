@@ -7,11 +7,11 @@ public interface ITesb{
     void OispaBish();
     void prkl(int i);
 }
-public class TesbAggregate : AggregateBase, ITesb{
+public class DebugAggregate : AggregateBase, ITesb{
     public string s = "prjkl";
 
     ICoreMessager coreMessager;
-    public TesbAggregate(ref Action onUpdate, ICoreMessager coreMessager) : base(ref onUpdate){
+    public DebugAggregate(ref Action onUpdate, ICoreMessager coreMessager) : base(ref onUpdate){
         this.coreMessager = coreMessager;
     }
 
@@ -25,15 +25,22 @@ public class TesbAggregate : AggregateBase, ITesb{
      }
 
     internal void Login() {
-        coreMessager.Login();
+        var maybePlayer = PlayerPrefs.GetString("Player");
+        if (maybePlayer == null) {
+           var playerGuid = Guid.NewGuid().ToString();
+            PlayerPrefs.SetString("Player",playerGuid);
+            maybePlayer = playerGuid;
+        }
+
+        coreMessager.Login(maybePlayer);
     }
 }
 
 public class Aggregates{
-    public TesbAggregate tesbAggregate;
+    public DebugAggregate DebugAggregate;
     public PlayerAggregate PlayerAggregate;
     public Aggregates(ref Action OnUpdate, ICoreMessager coreMessager){
-        tesbAggregate = new TesbAggregate(ref OnUpdate, coreMessager);
+        DebugAggregate = new DebugAggregate(ref OnUpdate, coreMessager);
         PlayerAggregate = new PlayerAggregate(ref OnUpdate);
     }
 }

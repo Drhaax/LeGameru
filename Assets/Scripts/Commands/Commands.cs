@@ -15,57 +15,21 @@ public interface ICommand<T,TU> : ICommand{
 
 
 public interface ICommands{
-	T GetCommand<T>();
+    LoginCommand LoginCommand { get; }
 }
 public class Commands : ICommands {
-	Dictionary<Type,ICommand> RegisteredCommands = new Dictionary<Type, ICommand>();
 
-	private KaljaCommand kaljaCommand;
-	private IntCommand intCmd;
-	
+    public LoginCommand LoginCommand { get; }
+
     public Commands(Aggregates aggregates){
-		kaljaCommand = new KaljaCommand(aggregates.tesbAggregate);
-		intCmd = new IntCommand(aggregates.tesbAggregate);
-		RegisterCommands();
-	}
-	
-	void RegisterCommands(){
-		RegisterCommand(typeof(KaljaCommand),kaljaCommand);
-		RegisterCommand(typeof(IntCommand), intCmd);
-	}
-	
-	public T GetCommand<T>(){
-		return (T)RegisteredCommands[typeof(T)];
+        LoginCommand = new LoginCommand();
 	}
 
-	void RegisterCommand(Type t,ICommand command){
-		RegisteredCommands[t] = command;
-	}
 }
 
-public class KaljaCommand : ICommand{
-	private ITesb agg;
-
-	public KaljaCommand(ITesb a){
-		agg = a;
-	}
-	public void Execute(){
-		agg.OispaBish();
-	}
-}
-
-public class IntCommand : ICommand<int>{
-	private ITesb agg;
-
-	public IntCommand(ITesb a){
-		agg = a;
-	}
-
-	public void Execute(int param){
-		agg.prkl(param);
-	}
-
-	public void Execute(){
-		agg.OispaBish();
-	}
+public class LoginCommand :ICommand
+{
+    
+    public void Execute() {
+    }
 }

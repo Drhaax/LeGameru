@@ -8,13 +8,15 @@ public class PlayerAggregate : AggregateBase
 {
     public Players Players;
     public Queue<Action> MovementQueue { get; private set; }
+    public Player LocalPlayer;
+    PlayerService playerService;
     public PlayerAggregate(ref Action onUpdate) : base(ref onUpdate) {
         MovementQueue = new Queue<Action>();
         Players = new Players();
+        playerService = new PlayerService();
     }
-    public Player LocalPlayer;
     internal void PlayerLogin(Player player) {
-        Debug.LogWarning("LOGIN");
+        //playerService.SendLoginRequest(player.Id);
         var p = Resources.Load("Prefabs/Player") as GameObject;
         var instance = GameObject.Instantiate(p);
         LocalPlayer = player;
@@ -34,7 +36,6 @@ public class PlayerAggregate : AggregateBase
              if (player != null) {
                 MovementQueue.Enqueue(() => player.SetPosition(p.Position.ToVector3()));
              }
-
         }
     }
 

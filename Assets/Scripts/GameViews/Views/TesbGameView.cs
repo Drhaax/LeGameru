@@ -22,4 +22,8 @@ public class TesbGameView : BaseGameView{
 	public void OpenPopup(){
 		base.OpenPopup(typeof(TesbPopup));
 	}
+
+	public void OpenView() {
+		base.OpenView(typeof(RootView));
+	}
 }

@@ -25,7 +25,7 @@ public class DebugAggregate : AggregateBase, ITesb{
      }
 
     internal void Login() {
-        var maybePlayer = PlayerPrefs.GetString("Player");
+        var maybePlayer = PlayerPrefs.GetString("User");
         if (maybePlayer == null) {
            var playerGuid = Guid.NewGuid().ToString();
             PlayerPrefs.SetString("Player",playerGuid);

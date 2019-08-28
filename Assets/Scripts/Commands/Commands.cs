@@ -21,7 +21,7 @@ public class Commands : ICommands {
 
     public LoginCommand LoginCommand { get; }
 
-    public Commands(Aggregates aggregates){
+    public Commands(Aggregates aggregates, UserManager userManager) {
         LoginCommand = new LoginCommand();
 	}
 

@@ -12,6 +12,8 @@ public interface IEventProcessor {
 
 public class GameRoot : MonoBehaviour, IEventProcessor
 {
+	public static CameraManager CameraManager;
+	public static GameSceneManager GameSceneManager;
     private Action Tick;
     private Action OnUpdate;
     private IDatabase gameDatabase;
@@ -19,9 +21,11 @@ public class GameRoot : MonoBehaviour, IEventProcessor
     public Queue<Action> EventQueue { get; private set; }
     
     public void InitGameRoot(GameObject ui){
+		CameraManager = new CameraManager();
+		GameSceneManager = new GameSceneManager();
         EventQueue = new Queue<Action>();
         CoreMessager coreMessager = new CoreMessager();
-        gameDatabase = new GameDatabase(ref OnUpdate, ui, coreMessager);
+		gameDatabase = new GameDatabase(ref OnUpdate, ui, coreMessager);
         var gameLogic = new GameLogic(this,ref Tick, coreMessager,gameDatabase.Aggregates);
         
         gameLogic.StartLogic();

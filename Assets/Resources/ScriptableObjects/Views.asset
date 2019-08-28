@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameViews:
   - {fileID: 2863597752444163482, guid: 44d061ddb7edc3845921aed922321213, type: 3}
+  - {fileID: 1019055071534719865, guid: b38c3c1b6de66f54a96d65264d11395a, type: 3}

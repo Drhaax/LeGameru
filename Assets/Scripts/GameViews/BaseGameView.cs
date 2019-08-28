@@ -58,8 +58,16 @@ public class BaseGameView :GameView, IGameView
     protected virtual void OpenPopup(Type t){
 	    GameDatabase.GameViewController.OpenPopup(t);
     }
-
-    protected virtual void CloseView(bool DestroyGameObject){
+	protected virtual void ClosePopup(Type t) {
+		GameDatabase.GameViewController.ClosePopup(t);
+	}
+	protected virtual void OpenView(Type t) {
+		GameDatabase.GameViewController.OpenView(t);
+	}
+	protected virtual void CloseView(Type t) {
+		GameDatabase.GameViewController.CloseView(t);
+	}
+	protected virtual void CloseView(bool DestroyGameObject){
 		gameObject.SetActive(false);
 	    if (DestroyGameObject){
 		    Destroy(this);

@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 1721953453360876537}
   - component: {fileID: 4191382451491740185}
   - component: {fileID: 1941183450458175876}
+  - component: {fileID: 8008546923277597033}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -264,3 +265,16 @@ MonoBehaviour:
   player: {fileID: -1690508991523013005}
   followCameraPlayerOffset: {x: 0, y: 12, z: -3}
   followCameraLerpSpeed: 0.1
+--- !u!114 &8008546923277597033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4031709371077627593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72979492e7e390b49ad1dab42be97f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraType: 1

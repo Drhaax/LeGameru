@@ -25,6 +25,7 @@ public class GameSceneManager : ISceneManager
 	private void SceneLoaded(Scene s, LoadSceneMode m) {
 		switch (s.name) {
 			case CharacterCreation:
+			GameRoot.CameraManager.SetCameraStatus(CameraType.CharacterCreation, true);
 			break;
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class InitializeGame : MonoBehaviour{
     private string[] Scenes = {"UI","GameRoot","LeGame","StartArea"};
     private GameObject UIParent;
+	private int LoadedSceneCount;
+	Action InitDoneAction;
     void Start(){
         SceneManager.sceneLoaded += SceneLoaded;
         Init();
@@ -16,17 +19,19 @@ public class InitializeGame : MonoBehaviour{
     }
 
     void LoadScenes(){
+		
         foreach (var s in Scenes){
             var maybeScene = SceneManager.GetSceneByName(s);
             if (!maybeScene.isLoaded){
                 SceneManager.LoadSceneAsync(s, LoadSceneMode.Additive);
             }
             else{
+				LoadedSceneCount++;
                 if (maybeScene.name == "GameRoot"){
                     foreach (var obj in maybeScene.GetRootGameObjects()){
                         if (obj.name == "GameRoot"){
                             var gameRoot = obj.GetComponent<GameRoot>();
-                            gameRoot.InitGameRoot(UIParent);
+                            gameRoot.InitGameRoot(UIParent, out InitDoneAction);
                         }
                     }
                 }
@@ -44,11 +49,12 @@ public class InitializeGame : MonoBehaviour{
     
     
     private void SceneLoaded(Scene s, LoadSceneMode type){
-        if (s.name == "GameRoot"){
+		LoadedSceneCount++;
+		if (s.name == "GameRoot"){
             foreach (var obj in s.GetRootGameObjects()){
                 if (obj.name == "GameRoot"){
                     var gameRoot = obj.GetComponent<GameRoot>();
-                    gameRoot.InitGameRoot(UIParent);
+                    gameRoot.InitGameRoot(UIParent, out InitDoneAction);
                 }
             }
         }
@@ -60,5 +66,18 @@ public class InitializeGame : MonoBehaviour{
                 }
             }
         }
+
+		if (LoadedSceneCount == Scenes.Length) {
+			if (InitDoneAction != null) {
+				InitDoneAction.Invoke();
+			} else {
+				Debug.LogError("Init action was null");
+			}
+			
+		}
     }
+
+	void ScenesLoaded() { 
+	
+	}
 }

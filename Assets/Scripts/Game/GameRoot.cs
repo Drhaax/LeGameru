@@ -19,17 +19,27 @@ public class GameRoot : MonoBehaviour, IEventProcessor
     private IDatabase gameDatabase;
     float time = 0;
     public Queue<Action> EventQueue { get; private set; }
-    
-    public void InitGameRoot(GameObject ui){
+	GameLogic gameLogic;
+    public void InitGameRoot(GameObject ui, out Action initDone ){
 		CameraManager = new CameraManager();
 		GameSceneManager = new GameSceneManager();
         EventQueue = new Queue<Action>();
         CoreMessager coreMessager = new CoreMessager();
 		gameDatabase = new GameDatabase(ref OnUpdate, ui, coreMessager);
-        var gameLogic = new GameLogic(this,ref Tick, coreMessager,gameDatabase.Aggregates);
+		initDone = InitializationDone;
+
+		gameLogic = new GameLogic(this,ref Tick, coreMessager,gameDatabase.Aggregates);
         
-        gameLogic.StartLogic();
+       
     }
+
+	public void InitializationDone() {
+		Action a;
+		gameDatabase.StartGame(out a);
+		a.Invoke();
+		gameLogic.StartLogic();
+
+	}
 
     void Update(){
         time += Time.deltaTime;

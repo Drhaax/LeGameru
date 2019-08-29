@@ -8,17 +8,17 @@ public class PlayerView : GameView
     GroundRaycaster GroundRaycaster;
     [SerializeField]
     float groundOffset;
-    public Player p;
+    public Character p;
     Camera cam;
     protected override void OnRegistered() {
         base.OnRegistered();
     }
 
     internal void HandleModelChanged(object sender, string arg2) {
-        var Player = sender as Player;
+        var character = sender as Character;
         if (arg2 == "POS") {
             
-            gameObject.transform.localPosition = new Vector3((float)Player.CurrentPosition.x, GroundRaycaster.GetGroundLevel()+groundOffset, (float)Player.CurrentPosition.z);
+            gameObject.transform.localPosition = new Vector3((float)character.CurrentPosition.x, GroundRaycaster.GetGroundLevel()+groundOffset, (float)character.CurrentPosition.z);
         }
         
     }

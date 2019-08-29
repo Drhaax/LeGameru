@@ -64,10 +64,6 @@ public class GameViewController :ICanOpenPopup
 	}
 
 	public void OpenView(Type t) {
-	foreach(var ty in ViewDict){
-			Debug.LogWarning(ty.Key +"  " + ty.Value);
-
-	}
 		var view = ViewDict[t];
 		if (view != null) {
 			if (view.activeInHierarchy) {

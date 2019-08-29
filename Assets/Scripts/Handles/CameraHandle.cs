@@ -18,12 +18,12 @@ public class CameraHandle : GameView
 		if (camera == null) {
 			Debug.LogError("CameraComponent Missing in: " + gameObject.name);
 		}
-		GameRoot.CameraManager.RegisterCamera(this);
 		SetCameraActive(ActivateOnStartUp);
+		GameRoot.CameraManager.RegisterCamera(this);
 	}
 
 	public void SetCameraActive(bool active) {
 		camera.gameObject.SetActive(active);
 	}
-	
+
 }

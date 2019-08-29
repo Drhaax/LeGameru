@@ -8,6 +8,7 @@ public interface IDatabase{
 	Aggregates Aggregates{ get; }
 	ICanOpenPopup GameViewController{ get; }
 	UserManager UserManager { get; }
+	void StartGame(out Action a);
 }
 
 public class GameDatabase : IDatabase {
@@ -23,5 +24,21 @@ public class GameDatabase : IDatabase {
 		Commands = new Commands(Aggregates,UserManager);
 		GameViewController = new GameViewController(ui);
 	}
+
+	public void StartGame(out Action a) {
+		var u = UserManager.CheckForExistingUser();
+		if (u != null) {
+			if (u.CharacterList != null && u.CharacterList.Count > 0) {
+				a = () => { };
+				//GoToCharacterSelection
+			} else {
+				a = () => UserManager.GoToCharacterCreation();
+			}
+		} else {
+			UserManager.CreateNewUser();
+			a = () => UserManager.GoToCharacterCreation();
+		}
+	}
+	
 
 }

@@ -25,7 +25,7 @@ public class DebugAggregate : AggregateBase, ITesb{
      }
 
     internal void Login() {
-        var maybePlayer = PlayerPrefs.GetString("User");
+        var maybePlayer = PlayerPrefs.GetString("Player");
         if (maybePlayer == null) {
            var playerGuid = Guid.NewGuid().ToString();
             PlayerPrefs.SetString("Player",playerGuid);
@@ -38,9 +38,9 @@ public class DebugAggregate : AggregateBase, ITesb{
 
 public class Aggregates{
     public DebugAggregate DebugAggregate;
-    public PlayerAggregate PlayerAggregate;
+    public CharacterAggregate CharacterAggregate;
     public Aggregates(ref Action OnUpdate, ICoreMessager coreMessager){
         DebugAggregate = new DebugAggregate(ref OnUpdate, coreMessager);
-        PlayerAggregate = new PlayerAggregate(ref OnUpdate);
+		CharacterAggregate = new CharacterAggregate(ref OnUpdate);
     }
 }

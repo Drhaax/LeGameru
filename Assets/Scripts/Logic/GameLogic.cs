@@ -43,18 +43,18 @@ public class GameLogic
     }
     public void ServerTick(Message msg, UdpState s) {
         var players = msg.players;
-        aggregates.PlayerAggregate.HandlePlayerMovement(players);
+        aggregates.CharacterAggregate.HandlePlayerMovement(players);
     }
     public void Tick() {
-        if (aggregates.PlayerAggregate.LocalPlayer != null) {
-            coreMessager.SendPlayerState(aggregates.PlayerAggregate.LocalPlayer.GetPlayerState());
+        if (aggregates.CharacterAggregate.LocalCharacter != null) {
+            coreMessager.SendPlayerState(aggregates.CharacterAggregate.LocalCharacter.GetPlayerState());
         }
         
     }
     public void Login(Message msg, UdpState s) {
-        var player = new Player(msg.name);
+        var character = new Character(msg.name);
         eventProsessor.AddEventToQueue(() => {
-            aggregates.PlayerAggregate.PlayerLogin(player);
+            aggregates.CharacterAggregate.PlayerLogin(character);
         });
         
     }

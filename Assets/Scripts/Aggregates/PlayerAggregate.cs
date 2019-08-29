@@ -4,37 +4,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAggregate : AggregateBase
+public class CharacterAggregate : AggregateBase
 {
-    public Players Players;
+    public Characters Characters;
     public Queue<Action> MovementQueue { get; private set; }
-    public Player LocalPlayer;
+    public Character LocalCharacter;
     PlayerService playerService;
-    public PlayerAggregate(ref Action onUpdate) : base(ref onUpdate) {
+    public CharacterAggregate(ref Action onUpdate) : base(ref onUpdate) {
         MovementQueue = new Queue<Action>();
-        Players = new Players();
+        Characters = new Characters();
         playerService = new PlayerService();
     }
-    internal void PlayerLogin(Player player) {
+    internal void PlayerLogin(Character character) {
         //playerService.SendLoginRequest(player.Id);
         var p = Resources.Load("Prefabs/Player") as GameObject;
         var instance = GameObject.Instantiate(p);
-        LocalPlayer = player;
-        player.isLocal = true;
+        LocalCharacter = character;
+		character.isLocal = true;
         var pView = instance.GetComponent<PlayerView>();
-        player.PlayerModelChanged -= pView.HandleModelChanged;
-        player.PlayerModelChanged += pView.HandleModelChanged;
-        pView.p = player;
-        Players.AddPlayer(player);
+		character.CharacterModelChanged -= pView.HandleModelChanged;
+		character.CharacterModelChanged += pView.HandleModelChanged;
+        pView.p = character;
+        Characters.AddPlayer(character);
         pView.ActivateView();
        
     }
 
     public void HandlePlayerMovement(List<PlayerState> players) {
         foreach (var p in players) {
-            Player player = Players.FindPlayer(p.Name);
-             if (player != null) {
-                MovementQueue.Enqueue(() => player.SetPosition(p.Position.ToVector3()));
+			Character character = Characters.FindCharacter(p.Name);
+             if (character != null) {
+                MovementQueue.Enqueue(() => character.SetPosition(p.Position.ToVector3()));
              }
         }
     }

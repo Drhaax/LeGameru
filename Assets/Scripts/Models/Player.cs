@@ -5,41 +5,41 @@ using UnityEngine;
 using ByteSerializer;
 using FixMath.NET;
 
-public class Players
+public class Characters
 {
-    List<Player> players;
+    List<Character> characters;
 
-    public Players() {
-        players = new List<Player>();
+    public Characters() {
+        characters = new List<Character>();
     }
-    public Player FindPlayer(string id) {
-        foreach (var p in players) {
-            if (p.Id == id) {
-                return p;
+    public Character FindCharacter(string id) {
+        foreach (var u in characters) {
+            if (u.Id == id) {
+                return u;
             }
         }
         return null;
     }
 
-    public void AddPlayer(Player p) {
-        players.Add(p);
+    public void AddPlayer(Character u) {
+        characters.Add(u);
     }
 }
 
-public class Player
+public class Character
 {
     public string Id;
-    public Stats PlayerStats;
+    public Stats CharacterStats;
     public Inventory Inventory;
     public Equipments Equipments;
     
     public CustomVector CurrentPosition;
     public CustomVector TargetPosition;
     public bool isLocal;
-    public Action<object, string> PlayerModelChanged = (o, s) => { };
-    public Player(string Id) {
+    public Action<object, string> CharacterModelChanged = (o, s) => { };
+    public Character(string Id) {
         this.Id = Id;
-        PlayerStats = new Stats();
+        CharacterStats = new Stats();
         Inventory = new Inventory();
         Equipments = new Equipments();
         CurrentPosition = new CustomVector(Fix64.Zero, (Fix64)3, Fix64.Zero);
@@ -66,6 +66,6 @@ public class Player
 
     public void SetPosition(Vector3 pos) {
         CurrentPosition = pos.ToCustomVector();
-        PlayerModelChanged.Invoke(this, "POS");
+        CharacterModelChanged.Invoke(this, "POS");
     }
 }

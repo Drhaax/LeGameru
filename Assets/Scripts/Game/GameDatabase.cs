@@ -7,8 +7,8 @@ public interface IDatabase{
 	ICommands Commands{ get; }
 	Aggregates Aggregates{ get; }
 	ICanOpenPopup GameViewController{ get; }
-	UserManager UserManager { get; }
-	void StartGame(out Action a);
+	Dictionary<KeyPositionType, KeyPosition> KeyPositions { get; }
+	UIFlowAction StartGame();
 }
 
 public class GameDatabase : IDatabase {
@@ -17,28 +17,37 @@ public class GameDatabase : IDatabase {
 	public ICanOpenPopup GameViewController{ get; }
 
 	public UserManager UserManager { get; }
-
-	public GameDatabase(ref Action onUpdate, GameObject ui, ICoreMessager coreMessager){
+	public Dictionary<KeyPositionType, KeyPosition> KeyPositions { get; }
+	public GameDatabase(ref Action onUpdate, GameObject ui, ICoreMessager coreMessager, Dictionary<KeyPositionType, KeyPosition> keyPositions){
+		this.KeyPositions = keyPositions;
 		UserManager = new UserManager();
 		Aggregates = new Aggregates(ref onUpdate, coreMessager);
 		Commands = new Commands(Aggregates,UserManager);
 		GameViewController = new GameViewController(ui);
 	}
 
-	public void StartGame(out Action a) {
-		var u = UserManager.CheckForExistingUser();
+	public UIFlowAction StartGame() {
+		var UIAction = UIFlowAction.Undefined;
+		var u = UserManager.ReadUser();
 		if (u != null) {
 			if (u.CharacterList != null && u.CharacterList.Count > 0) {
-				a = () => { };
-				//GoToCharacterSelection
+				UIAction = UIFlowAction.CharacterSelection;
 			} else {
-				a = () => UserManager.GoToCharacterCreation();
+				UIAction = UIFlowAction.CharacterCreation;
 			}
 		} else {
-			UserManager.CreateNewUser();
-			a = () => UserManager.GoToCharacterCreation();
+			u = UserManager.CreateNewUser();
+			UIAction = UIFlowAction.CharacterCreation;
 		}
+		Aggregates.CharacterSelectionAggregate.SetCurrentUser(u);
+		return UIAction;
 	}
 	
+
+}
+public enum UIFlowAction{
+	Undefined,
+	CharacterSelection,
+	CharacterCreation
 
 }

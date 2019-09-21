@@ -13,19 +13,20 @@ public interface IEventProcessor {
 public class GameRoot : MonoBehaviour, IEventProcessor
 {
 	public static CameraManager CameraManager;
-	public static GameSceneManager GameSceneManager;
-    private Action Tick;
+	private Action Tick;
     private Action OnUpdate;
     private IDatabase gameDatabase;
     float time = 0;
-    public Queue<Action> EventQueue { get; private set; }
+	Dictionary<KeyPositionType, KeyPosition> keyPositions;
+
+	public Queue<Action> EventQueue { get; private set; }
 	GameLogic gameLogic;
-    public void InitGameRoot(GameObject ui, out Action initDone ){
+    public void InitGameRoot(GameObject ui, out Action initDone, Dictionary<KeyPositionType, KeyPosition> keyPositions) {
+		this.keyPositions = keyPositions;
 		CameraManager = new CameraManager();
-		GameSceneManager = new GameSceneManager();
-        EventQueue = new Queue<Action>();
+		EventQueue = new Queue<Action>();
         CoreMessager coreMessager = new CoreMessager();
-		gameDatabase = new GameDatabase(ref OnUpdate, ui, coreMessager);
+		gameDatabase = new GameDatabase(ref OnUpdate, ui, coreMessager,keyPositions);
 		initDone = InitializationDone;
 
 		gameLogic = new GameLogic(this,ref Tick, coreMessager,gameDatabase.Aggregates);
@@ -34,9 +35,6 @@ public class GameRoot : MonoBehaviour, IEventProcessor
     }
 
 	public void InitializationDone() {
-		Action a;
-		gameDatabase.StartGame(out a);
-		a.Invoke();
 		gameLogic.StartLogic();
 
 	}
@@ -60,7 +58,13 @@ public class GameRoot : MonoBehaviour, IEventProcessor
         }
     }
 
-    public void RegisterGameViewObject(GameView bgv){
+	internal void KeyPositionsChanged(object sender, KeyPosition e) {
+		
+		Debug.LogWarning(e.KeyPositionType + "   " + keyPositions.Count);
+		//keyPositions.Add(e.KeyPositionType,e);
+	}
+
+	public void RegisterGameViewObject(GameView bgv){
         bgv.GameDatabase = gameDatabase;
 
     }

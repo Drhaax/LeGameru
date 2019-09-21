@@ -2,37 +2,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using UnityEngine;
 
 public class UserManager
 {
-	public User user;
-	public UserManager() {
-		
-	}
-
-	public User CheckForExistingUser() {
-		var maybePlayer = PlayerPrefs.GetString("User");
-		TextAsset file = Resources.Load<TextAsset>("LocalDB/Player");
-		user = JsonConvert.DeserializeObject<User>(file.text);
-		return user;
-	}
-
-	public void CreateNewUser() {
-		var userGuid = Guid.NewGuid().ToString();
-		PlayerPrefs.SetString("User", userGuid);
-		user = new User(userGuid);
-		using (StreamWriter sw = new StreamWriter("Assets/Resources/LocalDB/Player.json")) {
-			sw.Write(JsonConvert.SerializeObject(user));
 	
+	public User ReadUser() {
+		TextAsset file = Resources.Load<TextAsset>("LocalDB/Player");
+		var u = JsonConvert.DeserializeObject<User>(file.text);
+		return u;
+	}
+	public void WriteUser(User u) {
+		using (StreamWriter sw = new StreamWriter("Assets/Resources/LocalDB/Player.json")) {
+			sw.Write(JsonConvert.SerializeObject(u));
 		}
-		//StreamWriter writer = new StreamWriter("Assets/Resources/LocalDB/Player.json", true);
-		//writer.Write(JsonConvert.SerializeObject(user));
 	}
 
-	public void GoToCharacterCreation() {
-		Debug.LogWarning("GOTOTCHAR CREAT");
-		GameRoot.GameSceneManager.LoadCharacterCreation();
+	public User CreateNewUser() {
+		var userGuid = Guid.NewGuid().ToString();
+		var u = new User(userGuid);
+		WriteUser(u);
+		return u;
 	}
+
 }
+

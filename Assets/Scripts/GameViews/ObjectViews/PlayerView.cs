@@ -17,7 +17,6 @@ public class PlayerView : GameView
     internal void HandleModelChanged(object sender, string arg2) {
         var character = sender as Character;
         if (arg2 == "POS") {
-            
             gameObject.transform.localPosition = new Vector3((float)character.CurrentPosition.x, GroundRaycaster.GetGroundLevel()+groundOffset, (float)character.CurrentPosition.z);
         }
         

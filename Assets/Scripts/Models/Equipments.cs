@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Equipments : MonoBehaviour
+public class Equipments
 {
     public Equipment Weapon;
     public Equipment Head;

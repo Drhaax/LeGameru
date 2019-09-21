@@ -39,8 +39,11 @@ public class DebugAggregate : AggregateBase, ITesb{
 public class Aggregates{
     public DebugAggregate DebugAggregate;
     public CharacterAggregate CharacterAggregate;
-    public Aggregates(ref Action OnUpdate, ICoreMessager coreMessager){
+	public CharacterSelectionAggregate CharacterSelectionAggregate;
+	public Aggregates(ref Action OnUpdate, ICoreMessager coreMessager){
         DebugAggregate = new DebugAggregate(ref OnUpdate, coreMessager);
+		CharacterSelectionAggregate = new CharacterSelectionAggregate(ref OnUpdate);
 		CharacterAggregate = new CharacterAggregate(ref OnUpdate);
+
     }
 }

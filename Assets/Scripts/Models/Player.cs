@@ -32,13 +32,15 @@ public class Character
     public Stats CharacterStats;
     public Inventory Inventory;
     public Equipments Equipments;
-    
+	public CharacterInfo CharacterInfo;
     public CustomVector CurrentPosition;
     public CustomVector TargetPosition;
     public bool isLocal;
-    public Action<object, string> CharacterModelChanged = (o, s) => { };
+	[field: NonSerialized]
+	public Action<object, string> CharacterModelChanged = (o, s) => { };
     public Character(string Id) {
         this.Id = Id;
+		CharacterInfo = new CharacterInfo();
         CharacterStats = new Stats();
         Inventory = new Inventory();
         Equipments = new Equipments();

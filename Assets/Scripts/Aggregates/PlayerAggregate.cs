@@ -10,13 +10,13 @@ public class CharacterAggregate : AggregateBase
     public Queue<Action> MovementQueue { get; private set; }
     public Character LocalCharacter;
     PlayerService playerService;
-    public CharacterAggregate(ref Action onUpdate) : base(ref onUpdate) {
-        MovementQueue = new Queue<Action>();
-        Characters = new Characters();
-        playerService = new PlayerService();
-    }
+	public CharacterAggregate(ref Action onUpdate) : base(ref onUpdate) {
+		MovementQueue = new Queue<Action>();
+		Characters = new Characters();
+		playerService = new PlayerService();
+	}
+
     internal void PlayerLogin(Character character) {
-        //playerService.SendLoginRequest(player.Id);
         var p = Resources.Load("Prefabs/Player") as GameObject;
         var instance = GameObject.Instantiate(p);
         LocalCharacter = character;

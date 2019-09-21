@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Views
   m_EditorClassIdentifier: 
   GameViews:
+  - {fileID: 4368064234410045897, guid: 3386b8e14e431a346a179eea32cd1dad, type: 3}
+  - {fileID: 3337161801797496103, guid: 474a6682e4ff9a14fb5ffda92320eea1, type: 3}
   - {fileID: 2863597752444163482, guid: 44d061ddb7edc3845921aed922321213, type: 3}
   - {fileID: 1019055071534719865, guid: b38c3c1b6de66f54a96d65264d11395a, type: 3}
+  - {fileID: 1449707479096836025, guid: cc8aa7e356eb9034f8f9ee07d8b84964, type: 3}

@@ -35,7 +35,14 @@ public class ScriptableObjectHelper : EditorWindow
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
+		if (GUILayout.Button("DeletePlayerPrefs")) {
+			PlayerPrefs.DeleteAll();
+			using (StreamWriter sw = new StreamWriter("Assets/Resources/LocalDB/Player.json")) {
+				sw.Write("");
+			}
+		}
 	}
+	
 
 
 }

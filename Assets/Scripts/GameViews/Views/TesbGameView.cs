@@ -7,7 +7,7 @@ public class TesbGameView : BaseGameView{
 	
 	protected override void OnRegistered(){
 		base.OnRegistered();
-		Debug.LogWarning("Registered½!s");
+	//	ActiveOnStart = GameDatabase.Aggregates.CharacterAggregate
 	}
 
 	
